@@ -13,15 +13,15 @@ sc = MinMaxScaler(feature_range=(0, 1))
 
 def load_data(datasetname, column, seq_len, normalise_window):
     # A support function to help prepare datasets for an RNN/LSTM/GRU
-    data = datasetname.loc[:, column].replace(0, 1)
+    data = datasetname.loc[:, column].replace(0, 1)#opou o vale 1
     sequence_length = seq_len + 1
     result = []
-    for index in range(len(data) - sequence_length):
+    for index in range(len(data) - sequence_length): #krata ta data tou column xoris to window
         result.append(data[index: index + sequence_length])
 
     if normalise_window:
-        # result = sc.fit_transform(result)
         result = normalise_windows(result)
+        result = sc.fit_transform(result)
 
     result = np.array(result)
 
@@ -49,29 +49,29 @@ def normalise_windows(window_data):
     return normalised_data
 
 
-def predict_sequence_full(model, data, window_size):
-    # Shift the window by 1 new prediction each time, re-run predictions on new window
-    curr_frame = data[0]
-    predicted = []
-    for i in range(len(data)):
-        predicted.append(model.predict(curr_frame[newaxis, :, :])[0, 0])
-        curr_frame = curr_frame[1:]
-        curr_frame = np.insert(curr_frame, [window_size - 1], predicted[-1], axis=0)
-    return predicted
+# def predict_sequence_full(model, data, window_size):
+#     # Shift the window by 1 new prediction each time, re-run predictions on new window
+#     curr_frame = data[0]
+#     predicted = []
+#     for i in range(len(data)):
+#         predicted.append(model.predict(curr_frame[newaxis, :, :])[0, 0])
+#         curr_frame = curr_frame[1:]
+#         curr_frame = np.insert(curr_frame, [window_size - 1], predicted[-1], axis=0)
+#     return predicted
 
 
-def predict_sequences_multiple(model, data, window_size, prediction_len):
-    # Predict sequence of <prediction_len> steps before shifting prediction run forward by <prediction_len> steps
-    prediction_seqs = []
-    for i in range(int(len(data) / prediction_len)):
-        curr_frame = data[i * prediction_len]
-        predicted = []
-        for j in range(prediction_len):
-            predicted.append(model.predict(curr_frame[newaxis, :, :])[0, 0])
-            curr_frame = curr_frame[1:]
-            curr_frame = np.insert(curr_frame, [window_size - 1], predicted[-1], axis=0)
-        prediction_seqs.append(predicted)
-    return prediction_seqs
+# def predict_sequences_multiple(model, data, window_size, prediction_len):
+#     # Predict sequence of <prediction_len> steps before shifting prediction run forward by <prediction_len> steps
+#     prediction_seqs = []
+#     for i in range(int(len(data) / prediction_len)):
+#         curr_frame = data[i * prediction_len]
+#         predicted = []
+#         for j in range(prediction_len):
+#             predicted.append(model.predict(curr_frame[newaxis, :, :])[0, 0])
+#             curr_frame = curr_frame[1:]
+#             curr_frame = np.insert(curr_frame, [window_size - 1], predicted[-1], axis=0)
+#         prediction_seqs.append(predicted)
+#     return prediction_seqs
 
 
 def plot_results(predicted_data, true_data):
@@ -82,17 +82,17 @@ def plot_results(predicted_data, true_data):
     plt.legend()
     plt.show()
 
-
-def plot_results_multiple(predicted_data, true_data, prediction_len):
-    fig = plt.figure(facecolor='white')
-    ax = fig.add_subplot(111)
-    ax.plot(true_data, label='True Data')
-    # Pad the list of predictions to shift it in the graph to it's correct start
-    for i, data in enumerate(predicted_data):
-        padding = [None for p in range(i * prediction_len)]
-        plt.plot(padding + data, label='Prediction')
-        plt.legend()
-    plt.show()
+#
+# def plot_results_multiple(predicted_data, true_data, prediction_len):
+#     fig = plt.figure(facecolor='white')
+#     ax = fig.add_subplot(111)
+#     ax.plot(true_data, label='True Data')
+#     # Pad the list of predictions to shift it in the graph to it's correct start
+#     for i, data in enumerate(predicted_data):
+#         padding = [None for p in range(i * prediction_len)]
+#         plt.plot(padding + data, label='Prediction')
+#         plt.legend()
+#     plt.show()
 
 
 print('Support functions defined')
