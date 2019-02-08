@@ -63,6 +63,6 @@ print ('model compiled')
 model.fit(feature_train, label_train, batch_size=512, epochs=5, validation_data = (feature_test, label_test))
 
 
-#Let's use the model and predict the stock
+
 predicted = model.predict(feature_test)
-plot_results(predicted,label_test)
+plot_results(predicted,label_test,date)
