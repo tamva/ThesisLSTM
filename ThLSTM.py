@@ -20,7 +20,7 @@ print ('enrol window set to',Enrol_window )
 
 print('Support functions defined')
 
-dataset = pd.read_csv('./PMChineFiveCitie/ShenyangECXELPM20100101_20151231---V2).csv',sep=";")
+dataset = pd.read_csv('./ShenyangECXELPM20100101_20151231---V2).csv',sep=";")
 
 print(dataset.head())
 
