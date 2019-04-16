@@ -67,7 +67,7 @@ def normalise_windows(window_data):
 
 
 def plot_results(predicted_data, true_data):
-    # Standard plot /////////////////////////////////
+    # Standard plot
     fig = plt.figure(facecolor='white',figsize=(16,4))
     ax = fig.add_subplot(111)
     ax.plot(true_data, label='True Data')
@@ -75,26 +75,4 @@ def plot_results(predicted_data, true_data):
     plt.legend(['True Data', 'Prediction'])
     plt.show()
 
-    # #SECONDARY PLOT /////////////////////////
-    # fig = plt.figure(facecolor='white',figsize=(16,4))
-    # ax = fig.add_subplot(111)
-    # ax.plot(true_data, label='True Data')
-    # plt.plot(predicted_data, label='Prediction')
-    # locs,labels = plt.xticks()
-    # labels = ['2012-06','2013-01','2013-06','2014-01','2014-06','2015-01','2015-12']
-    # plt.xticks(locs, labels)
-    # plt.show()
-
-
-# def plot_results_multiple(predicted_data, true_data):
-#     fig = plt.figure(facecolor='white')
-#     ax = fig.add_subplot(111)
-#     ax.plot(true_data, label='True Data')
-#     #Pad the list of predictions to shift it in the graph to it's correct start
-#     # for i, data in enumerate(predicted_data):
-#     data=10
-#     padding = predicted_data[-1]
-#     plt.plot(padding + data, label='Prediction')
-#     plt.legend()
-#     plt.show()
 print('Support functions defined')
